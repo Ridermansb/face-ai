@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export const initialState = {
-  facesResult: undefined,
+  faceResult: undefined,
   statusRecognition: undefined,
   selectedDevice: undefined
 };

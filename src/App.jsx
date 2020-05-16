@@ -42,9 +42,8 @@ export default function App() {
                 </div>
             )}
 
-            <p className="uk-text-meta uk-text-muted uk-text-small">
+            <p className="uk-text-meta uk-text-muted uk-text-small uk-margin-small uk-text-center">
                 <a
-                    className="uk-navbar-item"
                     href="https://github.com/ridermansb"
                     target="_blank"
                 >

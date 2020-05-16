@@ -9,7 +9,7 @@ export const mainReducer = (state, action) => {
     case SET_STATUS_RECOGNITION:
       return { ...state, statusRecognition: action.payload };
     case SET_FACES_RESULT:
-      return { ...state, facesResult: action.payload };
+      return { ...state, faceResult: action.payload };
 
     default:
       return state;

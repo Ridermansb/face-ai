@@ -4,7 +4,6 @@ import {
   loadFaceExpressionModel,
   loadAgeGenderModel,
   loadFaceRecognitionModel,
-  detectAllFaces,
   detectSingleFace,
   TinyFaceDetectorOptions,
   resizeResults,
@@ -30,7 +29,7 @@ const useRecognition = (ready, canvasEl, videoEl) => {
   const requestAnimationFrameToken = useRef(null);
   const [status, setStatus] = useState(STARTING_STATUS);
   const [error, setError] = useState(undefined);
-  const [facesDetected, setFacesDetected] = useState(undefined);
+  const [faceDetected, setFaceDetected] = useState(undefined);
 
   const startDetection = useCallback(async () => {
     if (requestAnimationFrameToken.current) {
@@ -39,19 +38,19 @@ const useRecognition = (ready, canvasEl, videoEl) => {
 
     if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
       setStatus(STARTING_DETECTIONS_STATUS);
-      const faces = await detectAllFaces(videoEl, faceDetectorOptions)
+      const face = await detectSingleFace(videoEl, faceDetectorOptions)
           .withAgeAndGender()
           .withFaceExpressions();
 
       setStatus(READY_STATUS);
-      if (faces) {
-        setFacesDetected(faces);
+      if (face) {
+        setFaceDetected(face);
         const dims = matchDimensions(canvasEl, videoEl, true);
-        const resizedResults = resizeResults(faces, dims);
+        const resizedResults = resizeResults(face, dims);
         draw.drawDetections(canvasEl, resizedResults);
         draw.drawFaceExpressions(canvasEl, resizedResults);
       } else {
-        setFacesDetected(undefined);
+        setFaceDetected(undefined);
         contextCanvas.current.clearRect(
             0,
             0,
@@ -61,7 +60,6 @@ const useRecognition = (ready, canvasEl, videoEl) => {
       }
     } else {
       setStatus(WAITING_VIDEO_STATUS);
-      console.warn("No ready yet", videoEl.readyState);
     }
     requestAnimationFrameToken.current = requestAnimationFrame(startDetection);
   }, [videoEl, canvasEl]);
@@ -104,7 +102,7 @@ const useRecognition = (ready, canvasEl, videoEl) => {
   //   };
   // }, [videoEl]);
 
-  return { status, error, facesDetected };
+  return { status, error, faceDetected: faceDetected };
 };
 
 export default useRecognition;
