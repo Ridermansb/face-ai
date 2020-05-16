@@ -21,7 +21,7 @@ const CameraAccess = ({onAccess}) => {
             )}
 
             {error && (
-                <AlertDanger title="Falha ao tentar acessar a camera">
+                <AlertDanger title="Falha ao tentar acessar a câmera">
                     {error.message}
                 </AlertDanger>
             )}
