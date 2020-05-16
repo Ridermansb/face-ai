@@ -34,7 +34,7 @@ export const PersonInfo = ({person}) => {
         </span>
             </li>
             <li>
-                <span className="uk-text-lead">{person.age.toFixed(0)}</span> com anos
+                <span className="uk-text-lead">{person.age.toFixed(0)}</span> anos
                 de <span className="uk-text-bold">idade</span>
             </li>
             <li>
