@@ -4,8 +4,13 @@ import RequestAccess from "./RequestAccess";
 
 const CameraAccess = ({onAccess}) => {
     const [hasCameraAccess, setHasCameraAccess] = useState(undefined);
-    const handleOnAccess = useCallback(accessAllowed => {
+    const [error, setError] = useState(undefined);
+
+    const handleOnAccess = useCallback((error, accessAllowed) => {
         setHasCameraAccess(accessAllowed);
+        setError(error);
+
+        console.log('Access', accessAllowed, error)
         if (accessAllowed) {
             onAccess(accessAllowed);
         }
@@ -17,9 +22,9 @@ const CameraAccess = ({onAccess}) => {
                 <RequestAccess onAccess={handleOnAccess}/>
             )}
 
-            {hasCameraAccess === false && (
+            {error && (
                 <AlertDanger>
-                    Humm.. infelizmente sem acesso a câmera não somos úteis
+                    {error.message}
                 </AlertDanger>
             )}
         </div>

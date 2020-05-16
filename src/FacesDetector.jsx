@@ -85,7 +85,7 @@ const FacesDetector = ({children}) => {
                 videoEl.removeEventListener('playing', handleOnReady)
             }
         }
-    }, [videoRef])
+    }, [handleOnReady, videoRef])
 
     return (
         <Fragment>
@@ -107,7 +107,7 @@ const FacesDetector = ({children}) => {
                 {errorRecognition && (
                     <AlertDanger>{errorRecognition.message}</AlertDanger>
                 )}
-                <video className="uk-width-expand uk-position-absolute" ref={videoRef}/>
+                <video className="uk-width-expand uk-position-absolute" ref={videoRef} />
                 <canvas
                     className="uk-width-expand uk-position-absolute"
                     ref={canvasRef}

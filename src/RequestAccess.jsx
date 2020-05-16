@@ -1,25 +1,23 @@
-import React, { useCallback } from "react";
+import React, {useCallback} from "react";
+import {getMediaFor} from "./utils";
 
-const RequestAccess = ({ onAccess }) => {
+const RequestAccess = ({onAccess}) => {
     const handleClick = useCallback(
-        e => {
+        async e => {
             e.preventDefault();
-            navigator.getMedia(
-                { video: true },
-                function() {
-                    onAccess(true);
-                },
-                function() {
-                    onAccess(false);
-                }
-            );
+            try {
+                const log = await getMediaFor({video: true, audio: false});
+                onAccess(null, log);
+            } catch (error) {
+                onAccess(error);
+            }
         },
         [onAccess]
     );
 
     return (
         <div className="uk-width-large@l uk-width-expand uk-text-center">
-            <div data-uk-alert>
+            <div data-uk-alert="">
                 <p className="uk-text-lead">
                     PARA DETECTAR SUA FACE PRECISAMOS DE ACESSO A SUA CÂMERA.
                 </p>

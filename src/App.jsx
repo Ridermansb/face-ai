@@ -28,7 +28,7 @@ export default function App() {
                 )}
             </nav>
 
-            {handleCameraAccess === true && <Camera />}
+            {handleCameraAccess && <Camera />}
 
             {!handleCameraAccess && (
                 <div className="uk-container uk-margin-top uk-text-center">
