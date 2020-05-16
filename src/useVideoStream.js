@@ -12,7 +12,6 @@ function useVideoStream(constraints = {}) {
             setIsStartingStream(true);
             setError(undefined);
             const stream = await getMediaFor(constraints);
-            // const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
             if ("srcObject" in videoRef.current) {
                 // eslint-disable-next-line require-atomic-updates

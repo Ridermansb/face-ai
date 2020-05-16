@@ -49,7 +49,9 @@ const Devices = () => {
       }
     }
 
-    loadDevices();
+    if (navigator.mediaDevices) {
+        loadDevices();
+    }
   }, [dispatch]);
 
   const dropdownRef = useDropDown({

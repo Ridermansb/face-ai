@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import 'webrtc-adapter';
+import 'webrtc-adapter/out/adapter_no_edge';
 import "uikit";
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";

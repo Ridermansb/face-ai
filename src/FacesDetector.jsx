@@ -19,7 +19,7 @@ const FacesDetector = ({children}) => {
     const containerRef = useRef(null);
 
     const constraints = useMemo(() => {
-        return {
+        const defaultConstraints = {
             audio: false,
             video: {
                 facingMode: "user",
@@ -35,9 +35,13 @@ const FacesDetector = ({children}) => {
                     min: 10
                 }
             },
-            deviceId: {
-                exact: state.selectedDevice.deviceId
-            }
+        };
+
+        return {
+            ...defaultConstraints,
+            deviceId: state.selectedDevice
+                ? {exact: state.selectedDevice.deviceId}
+                : undefined
         };
     }, [state]);
 
@@ -107,7 +111,11 @@ const FacesDetector = ({children}) => {
                 {errorRecognition && (
                     <AlertDanger>{errorRecognition.message}</AlertDanger>
                 )}
-                <video className="uk-width-expand uk-position-absolute" ref={videoRef} />
+                <video className="uk-width-expand uk-position-absolute" ref={videoRef}
+                       playsInline={true}
+                       muted={true}
+                       preload="none"
+                />
                 <canvas
                     className="uk-width-expand uk-position-absolute"
                     ref={canvasRef}

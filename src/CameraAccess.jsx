@@ -9,8 +9,6 @@ const CameraAccess = ({onAccess}) => {
     const handleOnAccess = useCallback((error, accessAllowed) => {
         setHasCameraAccess(accessAllowed);
         setError(error);
-
-        console.log('Access', accessAllowed, error)
         if (accessAllowed) {
             onAccess(accessAllowed);
         }
@@ -23,7 +21,7 @@ const CameraAccess = ({onAccess}) => {
             )}
 
             {error && (
-                <AlertDanger>
+                <AlertDanger title="Falha ao tentar acessar a camera">
                     {error.message}
                 </AlertDanger>
             )}

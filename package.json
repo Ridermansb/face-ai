@@ -24,9 +24,12 @@
     "eject": "react-scripts eject"
   },
   "browserslist": [
-    ">0.2%",
+    "cover 99.5% in BR",
+    "ios_saf >= 8",
     "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+    "not ie > 0",
+    "not ie_mob > 0",
+    "safari >= 7",
+    "chrome >= 52"
   ]
 }

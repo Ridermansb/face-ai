@@ -1,7 +1,8 @@
 import React from "react";
 
-const AlertDanger = ({ children }) => (
-  <div className="uk-alert-danger" data-uk-alert>
+const AlertDanger = ({ title, children }) => (
+  <div className="uk-alert-danger" data-uk-alert="">
+      {title && (<h3>{title}</h3>)}
     <p>{children}</p>
   </div>
 );
