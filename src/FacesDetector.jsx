@@ -70,12 +70,16 @@ const FacesDetector = ({children}) => {
 
     const handleOnReady = useCallback(() => {
             const containerEl = containerRef.current;
+            // const videoEl = videoRef.current;
             if (containerEl) {
                 containerEl.setAttribute('style', `width: ${videoRef.current.offsetWidth}px; height: ${videoRef.current.offsetHeight}px`)
+                // const canvasWidth = videoEl.offsetWidth > videoEl.videoWidth ? videoEl.videoWidth : videoEl.offsetWidth
+                // const canvasHeight = videoEl.offsetHeight > videoEl.videoHeight ? videoEl.videoHeight : videoEl.offsetHeight
+                // canvasRef.current.setAttribute('style', `width: ${canvasWidth}px; height: ${canvasHeight}px`)
             }
         }
         ,
-        [containerRef, videoRef]
+        [containerRef, videoRef, canvasRef]
     )
 
     useEffect(() => {
@@ -94,8 +98,7 @@ const FacesDetector = ({children}) => {
     return (
         <Fragment>
             <div
-                // id="face-detector"
-                className="uk-position-relative uk-width-expand"
+                className="uk-position-relative uk-width-expand uk-height-max-large"
                 data-uk-data-grid=""
                 ref={containerRef}
             >
@@ -111,13 +114,13 @@ const FacesDetector = ({children}) => {
                 {errorRecognition && (
                     <AlertDanger>{errorRecognition.message}</AlertDanger>
                 )}
-                <video className="uk-width-expand uk-position-absolute" ref={videoRef}
+                <video className="uk-width-expand uk-position-absolute uk-height-max-large" ref={videoRef}
                        playsInline={true}
                        muted={true}
                        preload="none"
                 />
                 <canvas
-                    className="uk-width-expand uk-position-absolute"
+                    className="uk-width-expand uk-position-absolute uk-height-max-large"
                     ref={canvasRef}
                 />
             </div>
