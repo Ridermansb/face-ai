@@ -1,10 +1,18 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 
 navigator.getMedia =
-  navigator.getUserMedia || // use the proper vendor prefix
-  navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia ||
-  navigator.msGetUserMedia;
+    navigator.getUserMedia || // use the proper vendor prefix
+    navigator.webkitGetUserMedia ||
+    navigator.moxGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
+
+const getMediaFor = constraintToUse => {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    return navigator.mediaDevices.getUserMedia(constraintToUse);
+  }
+  return navigator.getMedia(constraintToUse);
+};
 
 function useVideoStream(constraints = {}) {
   const videoRef = useRef(null);
@@ -16,7 +24,8 @@ function useVideoStream(constraints = {}) {
     try {
       setIsStartingStream(true);
       setError(undefined);
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      const stream = await getMediaFor(constraints);
+      // const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
       if ("srcObject" in videoRef.current) {
         // eslint-disable-next-line require-atomic-updates

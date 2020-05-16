@@ -17,19 +17,19 @@ const Device = ({ device, active }) => {
   });
 
   const handleCkick = useCallback(
-    e => {
-      e.preventDefault();
-      dispatch({ type: SELECT_DEVICE, payload: device });
-    },
-    [device, dispatch]
+      e => {
+        e.preventDefault();
+        dispatch({ type: SELECT_DEVICE, payload: device });
+      },
+      [device, dispatch]
   );
 
   return (
-    <li className={className}>
-      <button className="uk-button uk-button-text" onClick={handleCkick}>
-        {device.label}
-      </button>
-    </li>
+      <li className={className}>
+        <button className="uk-button uk-button-text" onClick={handleCkick}>
+          {device.label}
+        </button>
+      </li>
   );
 };
 
@@ -41,7 +41,7 @@ const Devices = () => {
     async function loadDevices() {
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.filter(
-        device => device.kind === "videoinput"
+          device => device.kind === "videoinput"
       );
       setDevices(videoDevices);
       if (videoDevices.length > 0) {
@@ -59,28 +59,28 @@ const Devices = () => {
   });
 
   return (
-    <Fragment>
-      <a href="#">
-        {state.selectedDevice
-          ? state.selectedDevice.label
-          : "Selecionar câmera"}
-        <span data-uk-icon="icon:  triangle-down" />
-      </a>
-      <div className="uk-navbar-dropdown" ref={dropdownRef}>
-        <ul className="uk-nav uk-navbar-dropdown-nav">
-          {devices.map(device => (
-            <Device
-              device={device}
-              key={device.deviceId}
-              active={
-                state.selectedDevice &&
-                device.deviceId === state.selectedDevice.deviceId
-              }
-            />
-          ))}
-        </ul>
-      </div>
-    </Fragment>
+      <Fragment>
+        <a href="#">
+          {state.selectedDevice
+              ? state.selectedDevice.label
+              : "Selecionar câmera"}
+          <span data-uk-icon="icon:  triangle-down" />
+        </a>
+        <div className="uk-navbar-dropdown" ref={dropdownRef}>
+          <ul className="uk-nav uk-navbar-dropdown-nav">
+            {devices.map(device => (
+                <Device
+                    device={device}
+                    key={device.deviceId}
+                    active={
+                      state.selectedDevice &&
+                      device.deviceId === state.selectedDevice.deviceId
+                    }
+                />
+            ))}
+          </ul>
+        </div>
+      </Fragment>
   );
 };
 

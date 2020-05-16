@@ -5,6 +5,7 @@ import {
   loadAgeGenderModel,
   loadFaceRecognitionModel,
   detectAllFaces,
+  detectSingleFace,
   TinyFaceDetectorOptions,
   resizeResults,
   matchDimensions,
@@ -39,8 +40,8 @@ const useRecognition = (ready, canvasEl, videoEl) => {
     if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
       setStatus(STARTING_DETECTIONS_STATUS);
       const faces = await detectAllFaces(videoEl, faceDetectorOptions)
-        .withAgeAndGender()
-        .withFaceExpressions();
+          .withAgeAndGender()
+          .withFaceExpressions();
 
       setStatus(READY_STATUS);
       if (faces) {
@@ -52,10 +53,10 @@ const useRecognition = (ready, canvasEl, videoEl) => {
       } else {
         setFacesDetected(undefined);
         contextCanvas.current.clearRect(
-          0,
-          0,
-          videoEl.videoWidth,
-          videoEl.videoHeight
+            0,
+            0,
+            videoEl.videoWidth,
+            videoEl.videoHeight
         );
       }
     } else {
@@ -74,7 +75,7 @@ const useRecognition = (ready, canvasEl, videoEl) => {
           loadTinyFaceDetectorModel("/models"),
           loadFaceExpressionModel("/models"),
           loadFaceRecognitionModel("/models"),
-          loadAgeGenderModel("/models"),
+          loadAgeGenderModel("/models")
         ]);
         contextCanvas.current = canvasEl.getContext("2d");
         startDetection();
@@ -87,6 +88,21 @@ const useRecognition = (ready, canvasEl, videoEl) => {
       loadModels();
     }
   }, [ready, canvasEl, startDetection]);
+
+  // useEffect(() => {
+  //   function playingCallback() {
+  //     console.log("Playing....");
+  //   }
+
+  //   if (videoEl) {
+  //     videoEl.addEventListener("playing", playingCallback);
+  //   }
+  //   return () => {
+  //     if (videoEl) {
+  //       videoEl.removeEventListener("playing", playingCallback);
+  //     }
+  //   };
+  // }, [videoEl]);
 
   return { status, error, facesDetected };
 };

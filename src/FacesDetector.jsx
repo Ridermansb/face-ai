@@ -11,7 +11,7 @@ import useRecognition from "./useRecognition";
 import StoreContext from "./StoreContext";
 import { SET_STATUS_RECOGNITION, SET_FACES_RESULT } from "./reducers";
 
-const FacesDetector = () => {
+const FacesDetector = ({ children }) => {
   const { state, dispatch } = useContext(StoreContext);
 
   const canvasRef = useRef(null);
@@ -50,9 +50,9 @@ const FacesDetector = () => {
     error: errorRecognition,
     facesDetected
   } = useRecognition(
-    streamRef.current && !isStartingCamera,
-    canvasRef.current,
-    videoRef.current
+      streamRef.current && !isStartingCamera,
+      canvasRef.current,
+      videoRef.current
   );
 
   useLayoutEffect(() => {
@@ -61,28 +61,31 @@ const FacesDetector = () => {
   }, [dispatch, facesDetected, statusRecognition]);
 
   return (
-    <div className="uk-position-relative uk-flex uk-flex-center uk-flex-middle uk-width-medium uk-width-large@l uk-height-medium">
-      {isStartingCamera && (
-        <Fragment>
-          <div className="uk-overlay-primary uk-position-cover" />
-          <div className="uk-overlay uk-position-center uk-light">
-            <div data-uk-spinner />
-          </div>
-        </Fragment>
-      )}
-      {error && <AlertDanger>{error.message}</AlertDanger>}
-      {errorRecognition && (
-        <AlertDanger>{errorRecognition.message}</AlertDanger>
-      )}
-      <video
-        className="uk-width-medium uk-width-large@m uk-position-absolute"
-        ref={videoRef}
-      />
-      <canvas
-        className="uk-width-medium uk-width-large@m uk-position-absolute"
-        ref={canvasRef}
-      />
-    </div>
+      <div
+          id="face-detector"
+          className="uk-position-relative uk-width-expand uk-inline"
+          data-uk-data-grid=""
+          data-uk-height-viewport="expand: true; offset-bottom: 40"
+      >
+        {isStartingCamera && (
+            <Fragment>
+              <div className="uk-overlay-primary uk-position-cover" />
+              <div className="uk-overlay uk-position-center uk-light">
+                <div data-uk-spinner=""/>
+              </div>
+            </Fragment>
+        )}
+        {error && <AlertDanger>{error.message}</AlertDanger>}
+        {errorRecognition && (
+            <AlertDanger>{errorRecognition.message}</AlertDanger>
+        )}
+        <video className="uk-width-expand uk-position-absolute" ref={videoRef} />
+        <canvas
+            className="uk-width-expand uk-position-absolute"
+            ref={canvasRef}
+        />
+        {children}
+      </div>
   );
 };
 
